@@ -1,7 +1,8 @@
 require "test_helper"
 
 describe CustomersController do
-  CUSTOMER_FIELDS = %w(id name registered_at address city state postal_code phone).sort
+  # render_views
+  CUSTOMER_FIELDS = %w(id name registered_at postal_code phone).sort
 
   def check_response(expected_type:, expected_status: :success)
     must_respond_with expected_status
@@ -16,10 +17,10 @@ describe CustomersController do
 
   describe "index" do
     it "is a working route" do
-      get customers_path
+      get customers_path, as: :json
       body = check_response(expected_type: Array)
-
-      expect(body.length).must_equal Customer.count
+      # binding.pry
+      expect(body.count).must_equal Customer.count
       body.each do |customer|
         expect(customer.keys.sort).must_equal CUSTOMER_FIELDS.sort
       end
@@ -28,7 +29,7 @@ describe CustomersController do
     it "returns an empty array if no customers" do
       Customer.destroy_all
 
-      get customers_path
+      get customers_path, as: :json
       must_respond_with :success
 
       body = JSON.parse(response.body)
