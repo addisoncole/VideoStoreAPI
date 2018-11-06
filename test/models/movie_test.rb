@@ -1,7 +1,7 @@
 require "test_helper"
 
 describe Movie do
-  let(:movie) { movies(:one) }
+  let(:movie) { movies(:goonies) }
 
   describe "validations" do
     it "requires title and inventory to be valid" do
@@ -31,15 +31,15 @@ describe Movie do
   describe "relations" do
     it "has a list of rentals" do
       movie.must_respond_to :rentals
+      movie.rentals.count.must_equal 1
       movie.rentals.each do |rental|
         rental.must_be_kind_of Rental
       end
     end
 
     it "returns empty array if no rentals" do
-      rental = rentals(:one)
-
-      expect(movie.rentals).must_equal []
+      movie2 = movies(:brokeback)
+      expect(movie2.rentals).must_equal []
     end
   end
 

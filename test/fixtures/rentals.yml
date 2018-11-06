@@ -1,9 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
+rentalone:
+  customer: sontag
+  movie: priscilla
   checkout_date: 2018-11-05 15:39:39
   due_date: 2018-11-05 15:39:39
 
-two:
+rentaltwo:
+  customer: kael
+  movie: goonies
   checkout_date: 2018-11-05 15:39:39
   due_date: 2018-11-05 15:39:39

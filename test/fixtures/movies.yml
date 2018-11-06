@@ -1,13 +1,19 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  title: MyString
-  inventory: 10
+goonies:
+  title: The Goonies
+  inventory: 6
   overview: MyString
   release_date: 2018-11-05
 
-two:
-  title: MyString
-  inventory: 10
+priscilla:
+  title: Priscilla Queen of the Desert
+  inventory: 3
+  overview: MyString
+  release_date: 2018-11-05
+
+brokeback:
+  title: Brokeback Mountain
+  inventory: 8
   overview: MyString
   release_date: 2018-11-05
