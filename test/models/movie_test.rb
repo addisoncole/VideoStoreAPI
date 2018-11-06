@@ -39,7 +39,6 @@ describe Movie do
     it "returns empty array if no rentals" do
       rental = rentals(:one)
 
-      expect(movie.rentals.count).must_equal 0
       expect(movie.rentals).must_equal []
     end
   end
