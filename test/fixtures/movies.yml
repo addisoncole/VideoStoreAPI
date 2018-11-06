@@ -2,12 +2,12 @@
 
 one:
   title: MyString
-  inventory: MyString
+  inventory: 10
   overview: MyString
   release_date: 2018-11-05
 
 two:
   title: MyString
-  inventory: MyString
+  inventory: 10
   overview: MyString
   release_date: 2018-11-05
