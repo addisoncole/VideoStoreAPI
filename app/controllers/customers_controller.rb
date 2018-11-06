@@ -1,9 +1,7 @@
 class CustomersController < ApplicationController
   def index
-    customers = Customer.all
-    render json: jsonify(customers)
+    @customers = Customer.all
   end
-end
 
 private
 
@@ -11,6 +9,4 @@ private
     params.require(:customer).permit(:name, :registered_at, :address, :city, :state, :postal_code, :phone)
   end
 
-  def jsonify(customer_data)
-    return customer_data.as_json( only: [:id, :name, :registered_at, :address, :city, :state, :postal_code, :phone] )
-  end
+end
