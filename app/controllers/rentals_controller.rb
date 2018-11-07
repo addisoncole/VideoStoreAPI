@@ -2,11 +2,17 @@ class RentalsController < ApplicationController
 
   def checkout
     @rental = Rental.new(rental_params)
-    @rental.set_rental_dates
-    if @rental.save
-      render json: { id: @rental.id }
+    if @rental.check_movie_availability?
+
+      @rental.set_rental_dates
+
+      if @rental.save
+        render json: { id: @rental.id }
+      else
+        render_error(:bad_request, @rental.errors.messages)
+      end
     else
-      render_error(:bad_request, @rental.errors.messages)
+      render_error(:bad_request, movie_inventory: {['movie unavailable'})
     end
   end
 
