@@ -12,7 +12,19 @@ class RentalsController < ApplicationController
         render_error(:bad_request, @rental.errors.messages)
       end
     else
-      render_error(:bad_request, movie_inventory: {['movie unavailable'})
+      render_error(:bad_request, { movie_inventory: ["Movie out of stock"]})
+    end
+  end
+
+  def checkin
+    rentals = Rental.where(customer_id: params[:customer_id] )
+    @rental = rentals.find_by(movie_id: params[:movie_id])
+    @rental.update(checked_out?: false)
+
+    if @rental.save
+      render json: { id: @rental.id }
+    else
+      render_error(:bad_request, @rental.errors.messages)
     end
   end
 
