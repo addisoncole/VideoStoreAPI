@@ -13,7 +13,7 @@ class Rental < ApplicationRecord
   def check_movie_availability?
 
     inventory = self.movie.inventory
-    rentals = self.movie.rentals.length
-    return rentals < inventory
+    rentals = self.movie.rentals.where(:checked_out? => true)
+    return rentals.length < inventory
   end
 end
