@@ -1,6 +1,8 @@
 class CustomersController < ApplicationController
   def index
     @customers = Customer.all
+
+    render status: :ok
   end
 
 private
