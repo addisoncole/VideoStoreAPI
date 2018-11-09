@@ -19,12 +19,12 @@ class RentalsController < ApplicationController
   def checkin
     rentals = Rental.where(customer_id: params[:customer_id] )
     @rental = rentals.find_by(movie_id: params[:movie_id])
-    @rental.update(checked_out?: false)
+    if @rental
+      @rental.update(checked_out?: false)
 
-    if @rental.save
       render json: { id: @rental.id }
     else
-      render_error(:bad_request, @rental.errors.messages)
+      render_error(:not_found, { rental: ["Rental not found"]})
     end
   end
 
