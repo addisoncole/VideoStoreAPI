@@ -9,10 +9,10 @@ class RentalsController < ApplicationController
 
         render json: { id: @rental.id }
       else
-        render_error(:bad_request, @rental.errors.messages)
+        render_error(:bad_request, { movie_inventory: ["Movie out of stock"]})
       end
     else
-      render_error(:bad_request, { movie_inventory: ["Movie out of stock"]})
+      render_error(:bad_request, @rental.errors.messages)
     end
   end
 
