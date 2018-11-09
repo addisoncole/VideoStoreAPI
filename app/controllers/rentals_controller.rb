@@ -2,11 +2,11 @@ class RentalsController < ApplicationController
 
   def checkout
     @rental = Rental.new(rental_params)
-    if @rental.check_movie_availability?
+    if @rental.save
+      if @rental.check_movie_availability?
 
-      @rental.set_rental_dates
+        @rental.set_rental_dates
 
-      if @rental.save
         render json: { id: @rental.id }
       else
         render_error(:bad_request, @rental.errors.messages)
