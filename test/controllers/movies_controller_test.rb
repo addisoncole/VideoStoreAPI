@@ -1,8 +1,8 @@
 require "test_helper"
 
 describe MoviesController do
-  MOVIE_FIELDS = %w(id title release_date).sort
-  MOVIE_SHOW_FIELDS = %w(id title inventory overview release_date).sort
+  MOVIE_FIELDS = %w(id title release_date available_inventory).sort
+  MOVIE_SHOW_FIELDS = %w(id title inventory overview release_date available_inventory).sort
 
   def check_response(expected_type:, expected_status: :success)
     must_respond_with expected_status
