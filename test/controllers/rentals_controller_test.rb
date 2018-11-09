@@ -14,11 +14,12 @@ describe RentalsController do
   end
 
   describe "checkout" do
+    let(:rental_data) {
+       { "movie_id": movies(:goonies).id,
+         "customer_id": customers(:sontag).id }
+       }
     it "creates new rental with valid request data" do
-      rental_data = {
-        "movie_id": movies(:goonies).id,
-        "customer_id": customers(:sontag).id
-      }
+
 
       expect {
         post checkout_path, params: rental_data, as: :json
@@ -33,18 +34,28 @@ describe RentalsController do
       expect(rental.customer_id).must_equal rental_data[:customer_id]
     end
     it "does not create new rental with invalid request data" do
-      rental_data = {
+      bad_rental_data = {
         "movie_id": 0,
         "customer_id": 0
       }
+      post checkout_path, params: bad_rental_data, as: :json
+      body = check_response(expected_type: Hash, expected_status: :bad_request)
+      expect(body).must_include "errors"
+      expect(body["errors"]).must_include "movie", "customer"
+    end
+    it "returns error message when movie out of stock" do
+      inventory = movies(:goonies).inventory
+
+      inventory.times do |i|
+        post checkout_path, params: rental_data, as: :json
+      end
+
       post checkout_path, params: rental_data, as: :json
       body = check_response(expected_type: Hash, expected_status: :bad_request)
       expect(body).must_include "errors"
-      # expect(body["errors"]).must_include "movie_id"
-      # Invalid data gives 'movie out of stock' error - need to fix
-    end
-    it "returns error message when movie out of stock" do
-      
+      expect(body["errors"]).must_include "movie_inventory"
+
+
     end
   end
 end
