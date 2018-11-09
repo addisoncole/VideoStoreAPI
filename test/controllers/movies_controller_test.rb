@@ -61,4 +61,34 @@ describe MoviesController do
     end
   end
 
+  describe "create" do
+    it "creates new movie with valid data" do
+      movie_data = {
+        "title": "test",
+        "inventory": 10
+      }
+    expect {
+      post movies_path, params: movie_data, as: :json
+    }.must_change('Movie.count', +1)
+
+    body = check_response(expected_type: Hash)
+    expect(body).must_include "id"
+
+    movie =  Movie.find(body["id"].to_i)
+
+    expect(movie.title).must_equal movie_data[:title]
+    expect(movie.inventory).must_equal movie_data[:inventory]
+
+    end
+    it "does not create new movie with invalid data" do
+      expect {
+        post movies_path, as: :json
+      }.wont_change('Movie.count')
+
+      body = check_response(expected_type: Hash, expected_status: :bad_request)
+      expect(body).must_include "errors"
+      expect(body["errors"]).must_include "title", "inventory"
+    end
+  end
+
 end
