@@ -7,6 +7,7 @@ class RentalsController < ApplicationController
 
         @rental.set_rental_dates
 
+        # render status: :ok
         render json: { id: @rental.id }
       else
         render_error(:bad_request, { movie_inventory: ["Movie out of stock"]})
