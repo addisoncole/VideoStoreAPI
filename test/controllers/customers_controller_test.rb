@@ -2,7 +2,7 @@ require "test_helper"
 
 describe CustomersController do
   # render_views
-  CUSTOMER_FIELDS = %w(id name registered_at postal_code phone check_out_count).sort
+  CUSTOMER_FIELDS = %w(id name registered_at postal_code phone movies_checked_out_count).sort
 
   def check_response(expected_type:, expected_status: :success)
     must_respond_with expected_status
