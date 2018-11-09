@@ -16,4 +16,11 @@ class Rental < ApplicationRecord
     rentals = self.movie.rentals.where(:checked_out? => true)
     return rentals.length < inventory
   end
+
+  def get_available_number
+
+    inventory = self.movie.inventory
+    rentals = self.movie.rentals.where(:checked_out? => true)
+    return inventory - rentals.length
+  end
 end
