@@ -13,55 +13,38 @@ describe RentalsController do
     return body
   end
 
-  # describe "checkout" do
-  #   it "creates a new rental with valid request data" do
-  #     post checkout_path, as: :json
-  #     body = check_response(expected_type: Array)
-  #
-  #     expect(body.count).must_equal Rental.count
-  #     body.each do |rental|
-  #       expect(rental).must_be_kind_of Rental
-  #     end
-  #   end
-  #
-  #   it "returns an empty array if no customers" do
-  #     Movie.destroy_all
-  #
-  #     get movies_path, as: :json
-  #     must_respond_with :success
-  #
-  #     body = JSON.parse(response.body)
-  #
-  #     expect(body).must_equal []
-  #   end
-  # end
-
-  # let(:customer_id) {customers(:sontag)}
-  # let(:movie_id) {movies(:goonies)}
-  # let(:rental_data) {
-  #   {
-  #     "movie": movies(:goonies)
-  #     "customer": movies(:goonies)
-  #   }
-  # }
-
   describe "checkout" do
     it "creates new rental with valid request data" do
-      # expect {
-      #   post checkout_path(rental_data), as: :json
-      # }.must_change("Rental.count", +1)
+      rental_data = {
+        "movie_id": movies(:goonies).id,
+        "customer_id": customers(:sontag).id
+      }
 
-      body = JSON.parse(response.body)
-      expect(body).must_be_kind_of Hash
+      expect {
+        post checkout_path, params: rental_data, as: :json
+      }.must_change('Rental.count', +1)
+
+      body = check_response(expected_type: Hash)
       expect(body).must_include "id"
 
       rental = Rental.find(body["id"].to_i)
-      # binding.pry
-      # expect(rental.movie.title).must_equal rental_data["movie_id"]
-      # expect(rental.customer_id).must_equal rental_data["customer_id"]
-      must_respond_with :success
+
+      expect(rental.movie_id).must_equal rental_data[:movie_id]
+      expect(rental.customer_id).must_equal rental_data[:customer_id]
+    end
+    it "does not create new rental with invalid request data" do
+      rental_data = {
+        "movie_id": 0,
+        "customer_id": 0
+      }
+      post checkout_path, params: rental_data, as: :json
+      body = check_response(expected_type: Hash, expected_status: :bad_request)
+      expect(body).must_include "errors"
+      # expect(body["errors"]).must_include "movie_id"
+      # Invalid data gives 'movie out of stock' error - need to fix
     end
     it "returns error message when movie out of stock" do
+      
     end
   end
 end
