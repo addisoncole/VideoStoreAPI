@@ -27,4 +27,18 @@ describe Rental do
 
   end
 
+  describe "relations" do
+
+    it "has a customer" do
+      rental.must_respond_to :customer
+      rental.customer.must_be_kind_of Customer
+    end
+
+    it "has a movie" do
+      rental.must_respond_to :movie
+      rental.movie.must_be_kind_of Movie
+    end
+
+  end
+
 end
