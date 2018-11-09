@@ -17,3 +17,7 @@ brokeback:
   inventory: 8
   overview: MyString
   release_date: 2018-11-05
+
+no_inventory:
+  title: No Inventory
+  inventory: 0
